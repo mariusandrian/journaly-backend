@@ -3,6 +3,7 @@ const messageController = require('../controllers/messageController');
 const sessionController = require('../controllers/session');
 const entriesController = require('../controllers/entriesController');
 const questionsController = require('../controllers/questionsController');
+const communityPostController = require('../controllers/communityPostController');
 
 // const cloudinary = require('cloudinary').v2;
 // const multer = require('multer');
@@ -28,10 +29,12 @@ module.exports = app => {
     app.post('/entries', entriesController.create);
 
     // Community Daily Question
+    app.get('/cty/feed/:id', communityPostController.findPostsByQuestionId)
+    app.post('/cty/reply/:id', communityPostController.replyToEntry);
     app.post('/cty/new', questionsController.create);
     app.get('/cty/question', questionsController.findOne);
-    // Get 10 recent community posts
-    app.get('/cty')
+    app.post('/cty/post', communityPostController.createPost);
+    // Get recent community posts by Question Id
     
 
 

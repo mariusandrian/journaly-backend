@@ -1,9 +1,8 @@
 const db = require('../db');
 const { ObjectId } = require('mongodb');
 
-
 const doFindMany = async condition => {
-   const data = await db.entries.find(condition).toArray()
+   const data = await db.communityPost.find(condition).toArray()
    return data
 };
 
@@ -11,8 +10,12 @@ module.exports = {
     findAll () {
         return doFindMany({});
     },
-    async create (data) {
-        const { ops: [newOne] } = await db.entries.insertOne(data);
+    async findByQuestionId (id) {
+        return doFindMany({ question_id: id })
+    },
+    async createPost (data) {
+        const { ops: [newOne] } = await db.communityPost.insertOne(data);
+        console.log(newOne);
         return newOne;
     },
     async updateById (id, newData) {
@@ -44,14 +47,15 @@ module.exports = {
     },
     // Post replies
     async replyToEntry (entryId, payload) {
-        const result = await db.entries.findOneAndUpdate(
+        const result = await db.communityPost.findOneAndUpdate(
             { _id: ObjectId(entryId) },
             { $addToSet: { 
                 replies: {
-                    user_id: payload.userId,
+                    user_id: payload.user_id,
                     username: payload.username,
                     content: payload.content,
-                    date: new Date()
+                    date: payload.date,
+                    timestamp: new Date()
             }}},
             { returnOriginal: false }
             );

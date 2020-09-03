@@ -14,6 +14,9 @@ const schema = {
                 content: {
                     type: "string"
                 },
+                question_id: {
+                    type: "string"
+                },
                 replies: {
                     type: "array"
                 },
@@ -22,7 +25,7 @@ const schema = {
                 }
             },
             required: [
-                "user_id", "username", "date", "content"
+                "user_id", "username", "date", "content", "question_id"
             ]
 		}
 	}
