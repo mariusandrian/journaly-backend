@@ -53,7 +53,7 @@ module.exports = {
             { _id: ObjectId(entryId) },
             { $addToSet: { 
                 replies: {
-                    user_id: payload.userId,
+                    user_id: payload.user_id,
                     username: payload.username,
                     content: payload.content,
                     date: new Date()

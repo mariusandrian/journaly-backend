@@ -2,6 +2,8 @@ const usersController = require('../controllers/usersController');
 const messageController = require('../controllers/messageController');
 const sessionController = require('../controllers/session');
 const entriesController = require('../controllers/entriesController');
+const questionsController = require('../controllers/questionsController');
+
 // const cloudinary = require('cloudinary').v2;
 // const multer = require('multer');
 // const upload = multer({ dest: 'uploads/' });
@@ -26,9 +28,11 @@ module.exports = app => {
     app.post('/entries', entriesController.create);
 
     // Community Daily Question
-    app.get('/cty/question', )
+    app.post('/cty/new', questionsController.create);
+    app.get('/cty/question', questionsController.findOne);
     // Get 10 recent community posts
     app.get('/cty')
+    
 
 
 
