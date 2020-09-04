@@ -31,6 +31,28 @@ module.exports = {
         const [result] = await doFindMany({ _id: ObjectId(id) });
         return result;
     },
+    async sendMail (userId, payload) {
+        const result = await db.users.findOneAndUpdate(
+            { _id: ObjectId(userId) },
+            { $addToSet: { 
+                inbox: {
+                    user_id: payload.user_id,
+                    username: payload.username,
+                    content: payload.content,
+                    date: payload.date,
+                    timestamp: new Date()
+            }}},
+            { returnOriginal: false }
+            );
+        console.log(result);
+        return result;
+    },
+    async findMailsById (userId) {
+        const result = await db.users.findOne({ _id: ObjectId(userId) })
+        console.log(result.inbox);
+        return result.inbox;
+        
+    },
     async getOneByEmail (email) {
         const [result] = await doFindMany({email: email});
         if (!result) throw new Error(`User with email '${email}' does not exist`);

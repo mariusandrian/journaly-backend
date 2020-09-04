@@ -24,17 +24,20 @@ module.exports = app => {
     app.get('/entries/:id', entriesController.getByUserId);
     app.get('/entries/edit/:id', entriesController.getByEntryId);
     app.delete('/entries/:id', entriesController.deleteById);
-    app.put('/entries/reply/:id', entriesController.replyToEntry);
+    app.put('/entries/reply/:id', entriesController.replyToEntry);// To be moved to user collection
     app.put('/entries/:id', entriesController.updateById);
     app.post('/entries', entriesController.create);
 
     // Community Daily Question
     app.get('/cty/feed/:id', communityPostController.findPostsByQuestionId)
-    app.post('/cty/reply/:id', communityPostController.replyToEntry);
+    app.post('/cty/reply/:id', communityPostController.replyToEntry); 
     app.post('/cty/new', questionsController.create);
     app.get('/cty/question', questionsController.findOne);
     app.post('/cty/post', communityPostController.createPost);
-    // Get recent community posts by Question Id
+
+    // Send reply to entry
+    app.get('/mail/:id', usersController.findMailsById);
+    app.put('/mail/:id', usersController.sendMail);
     
 
 

@@ -43,6 +43,20 @@ module.exports = {
             isDeleteSuccessful,
         });
     },
+    async findMailsById(req, res) {
+        const result = await usersRepository.findMailsById(req.params.id);
+        httpResponseFormatter.formatOkResponse(res, result);
+    },
+    async sendMail(req, res) {
+        try {
+            const result = await usersRepository.sendMail(req.params.id, req.body);
+            httpResponseFormatter.formatOkResponse(res, result);
+        } catch (err) {
+            httpResponseFormatter.formatOkResponse(res, {
+                err: err
+            });
+        }
+    },
     async uploadAvatar(req, res, next) {
         try {
             let url = '';

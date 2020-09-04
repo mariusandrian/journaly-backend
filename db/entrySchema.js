@@ -5,6 +5,9 @@ const schema = {
 				user_id: {
                     type: "string"
                 },
+                username: {
+                    type: "string"
+                },
                 date: {
                     type: 'string'
                 },
@@ -22,7 +25,7 @@ const schema = {
                 }
             },
             required: [
-                "user_id", "date", "content"
+                "user_id", "date", "content", "username"
             ]
 		}
 	}
