@@ -16,7 +16,7 @@ const schema = {
                 }
             },
             required: [
-                "username", "email", "image", "password"
+                "username", "email", "password"
             ]
 		}
 	}

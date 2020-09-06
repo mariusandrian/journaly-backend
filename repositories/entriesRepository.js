@@ -44,7 +44,6 @@ module.exports = {
         // ],
         // {explain: true});
         const result = await db.entries.find({ user_id: { $ne: id}}).toArray();
-        console.log(result);
         return result;
     },
     // Post replies
@@ -60,7 +59,6 @@ module.exports = {
             }}},
             { returnOriginal: false }
             );
-        console.log(result);
         return result;
     },
     async updateNotifications(currentUserId, action, payload) {

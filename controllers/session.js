@@ -2,7 +2,8 @@ const usersRepository = require('../repositories/usersRepository');
 const httpResponseFormatter = require('../formatters/httpResponse');
 const bcrypt = require('bcrypt');
 const axios = require('axios');
-
+const passport = require('passport');
+const db = require('../db');
 // EXPORT
 module.exports = {
     async loginSubmit(req, res) {
@@ -40,27 +41,27 @@ module.exports = {
             isLogIn: false
         });
     },
-    async getDataFacebook (req, res) {
-        const { data } = await axios({
-            url: 'https://graph.facebook.com/me',
-            method: 'get',
-            params: {
-              fields: ['email', 'first_name', 'last_name'].join(','),
-              access_token: req.body.accessToken,
-            },
-          });
-          httpResponseFormatter.formatOkResponse(res, data);
-    },
-    async logInWithFacebookSubmit (req, res) {
-        try {
-            const user = await usersRepository.getOneByEmail(req.body.email);
-                req.session.userId = user._id;
-                httpResponseFormatter.formatOkResponse(res, user);
-        } catch (err) {
-            console.log(err);
-            httpResponseFormatter.formatOkResponse(res, {
-                err: err.message
-            });
-        }
-    }
+    // async getDataFacebook (req, res) {
+    //     const { data } = await axios({
+    //         url: 'https://graph.facebook.com/me',
+    //         method: 'get',
+    //         params: {
+    //           fields: ['email', 'first_name', 'last_name'].join(','),
+    //           access_token: req.body.accessToken,
+    //         },
+    //       });
+    //       httpResponseFormatter.formatOkResponse(res, data);
+    // },
+    // async logInWithFacebookSubmit (req, res) {
+    //     try {
+    //         const user = await usersRepository.getOneByEmail(req.body.email);
+    //             req.session.userId = user._id;
+    //             httpResponseFormatter.formatOkResponse(res, user);
+    //     } catch (err) {
+    //         console.log(err);
+    //         httpResponseFormatter.formatOkResponse(res, {
+    //             err: err.message
+    //         });
+    //     }
+    // }
 }

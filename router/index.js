@@ -38,13 +38,22 @@ module.exports = app => {
     // Send reply to entry
     app.get('/mail/:id', usersController.findMailsById);
     app.put('/mail/:id', usersController.sendMail);
-    
-
-
 
     // Users
-    app.get('/', usersController.getAll);
-    app.get('/logout', sessionController.logOut);
+    // User Signup
+    app.post('/register', usersController.create);
+
+    // User Login
+    app.post('/login', usersController.login);
+    app.get('/user', usersController.getDetails);
+
+    // app.get('/', usersController.getAll);
+    // app.get('/logout', sessionController.logOut);
+
+    // ----------------- FOR TEST ONLY ----------------
+    // Find a user
+    // app.get('/user', usersController.findOne); 
+    // ----------------- FOR TEST ONLY ----------------
 
     // User Forgot Password
     // app.post('/forget-password', usersController.resetPassword);
@@ -59,8 +68,7 @@ module.exports = app => {
 
     //GET ONE CHAT ROOM
     // app.get('/chat_room/:id_chat_room', messageController.getById);
-
-    app.post('/', usersController.create);
+    
 
     // log in with fb
     // app.post('/get_data_fb', sessionController.getDataFacebook);
@@ -76,14 +84,13 @@ module.exports = app => {
     // add new message to a chat room 
     // app.put('/chat_room/:id_chat_room', messageController.updateById);
 
-    app.delete('/:id', usersController.deleteById);
+    // app.delete('/:id', usersController.deleteById);
 
    
-    // login-submit
-    app.post('/login_submit', sessionController.loginSubmit);
+    
 
     // like another user
-    app.put('/like/:id', usersController.likeUser);
+    // app.put('/like/:id', usersController.likeUser);
 
 
 

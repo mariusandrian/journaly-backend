@@ -15,7 +15,6 @@ module.exports = {
     },
     async createPost (data) {
         const { ops: [newOne] } = await db.communityPost.insertOne(data);
-        console.log(newOne);
         return newOne;
     },
     async updateById (id, newData) {
@@ -42,7 +41,6 @@ module.exports = {
             { $sample: { size: 5 }}
         ],
         {explain: true});
-        console.log(result);
         return result;
     },
     // Post replies
@@ -59,7 +57,6 @@ module.exports = {
             }}},
             { returnOriginal: false }
             );
-        console.log(result);
         return result;
     },
     async updateNotifications(currentUserId, action, payload) {

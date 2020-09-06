@@ -4,8 +4,26 @@ const cloudinary = require('cloudinary').v2;
 const bcrypt = require('bcrypt');
 const { likeUser } = require('../repositories/usersRepository');
 const nodemailer = require('nodemailer');
+const passport = require("passport");
 
 module.exports = {
+    login(req, res, next) {
+        console.log('reqbody',req.body)
+        passport.authenticate("local", (err, user, info) => {
+            console.log('authenticating user ' , user);
+            if (err) throw err;
+            if (!user) {
+                httpResponseFormatter.formatUserErrResponse(res, null, "Incorrect Username or Password")
+                // res.status(400).send("Incorrect Username or Password");
+            } else {
+            req.logIn(user, function (err) {
+              if (err) return next(err);
+              console.log('login successful');
+              res.status(201).send(JSON.stringify(user));
+            })
+          }
+        })(req, res, next);
+      },
     async getAll(req, res) {
         if (req.session.userId) {
             const users = await usersRepository.findAll();
@@ -16,13 +34,25 @@ module.exports = {
             });
         }
     },
+    // For Passport deserialize --------------------------
     async getById(req, res) {
-        const oneUser = await usersRepository.findById(req.params.id);
-        httpResponseFormatter.formatOkResponse(res, oneUser);
+        try {
+            const oneUser = await usersRepository.findById(req.params.id);
+            return oneUser;
+        } catch (err) {
+            return err;
+        }
     },
+    // For getting client info upon loading component ----------
+    getDetails(req, res) {
+        console.log('req.session is ', req.session);
+        console.log('req.user is ', req.user);
+        res.send(req.session);
+    },
+
     async create(req, res) {
         try {
-            req.body.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
+            req.body.password =  bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
             const newUser = await usersRepository.create(req.body);
             httpResponseFormatter.formatOkResponse(res, newUser);
         } catch (err) {
@@ -109,4 +139,15 @@ module.exports = {
             });
         }
     },
+    async findOne(req, res) {
+        try {
+            const result = await usersRepository.findOne(req.body);
+            httpResponseFormatter.formatOkResponse(res, result);
+        } catch (err) {
+            httpResponseFormatter.formatOkResponse(res, {
+                err: err
+            });
+        }
+    },
+    
 };

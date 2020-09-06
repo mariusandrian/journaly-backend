@@ -12,7 +12,6 @@ module.exports = {
     },
     async findOne () {
         const result = await doFindMany({});
-        console.log(result);
         // Logic to get 'randomized' question
         let today = new Date();
         let todayDate = today.getDate();

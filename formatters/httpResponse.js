@@ -1,5 +1,11 @@
 const HTTP_STATUS_CODES = {
     OK: 200,
+    CREATED: 201,
+    NOTFOUND: 404,
+    SERVERERR: 500,
+    BADGATEWAY: 502,
+    GATEWAYTIMEOUT: 504,
+    UNPROCESSABLE: 422
 };
 
 module.exports = {
@@ -9,5 +15,12 @@ module.exports = {
                 status: 'ok',
                 data: payload,
             });
+    },
+    formatUserErrResponse (res, payload, errorMessage) {
+        res.status(HTTP_STATUS_CODES.NOTFOUND)
+            .json({
+                status: 'not found',
+                error: errorMessage
+            })
     }
 };
