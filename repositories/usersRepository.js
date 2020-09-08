@@ -15,6 +15,7 @@ module.exports = {
         const { ops: [newOne] } = await db.users.insertOne(data);
         return newOne;
     },
+    // For Authentication
     async findOne (username, password, done) {
         const user = await db.users.findOne({
             username: username
@@ -39,6 +40,11 @@ module.exports = {
             throw new Error(`Unable to find account due to ${err.message}`);
         }
     },
+    // For Authentication
+    async findById (id) {
+        const result = await db.users.findOne({_id: ObjectId(id)});
+        return result;
+    },
     async updateById (id, newData) {
         const result = await db.users.findOneAndUpdate(
             { _id: ObjectId(id) },
@@ -48,10 +54,7 @@ module.exports = {
         console.log(result);
         return { result: result.lastErrorObject, updatedDocument: result.value };
     },
-    async findById (id) {
-        const result = await db.users.findOne({_id: ObjectId(id)});
-        return result;
-    },
+    
     async sendMail (userId, payload) {
         const result = await db.users.findOneAndUpdate(
             { _id: ObjectId(userId) },

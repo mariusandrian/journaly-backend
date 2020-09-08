@@ -25,10 +25,12 @@ module.exports = {
         }
     },
     logOut: (req, res) => {
+        console.log('trying to logout');
         req.session.destroy((err) => {
             if (err) {
                 return console.log(err);
             }
+            console.log('logout successful');
             httpResponseFormatter.formatOkResponse(res, {
                 user: "log out"
             });

@@ -19,7 +19,7 @@ module.exports = {
             req.logIn(user, function (err) {
               if (err) return next(err);
               console.log('login successful');
-              res.status(201).send(JSON.stringify(user));
+                httpResponseFormatter.formatOkResponse(res, user);
             })
           }
         })(req, res, next);
@@ -47,11 +47,24 @@ module.exports = {
     getDetails(req, res) {
         console.log('req.session is ', req.session);
         console.log('req.user is ', req.user);
-        res.send(req.session);
+        if (req.session.passport !== undefined) {
+            const payload = {
+                isLogin: true
+            }
+            console.log('logged in')
+            httpResponseFormatter.formatOkResponse(res, payload);
+        } else {
+            const payload = {
+                isLogin: false
+            }
+            console.log('not login')
+            httpResponseFormatter.formatOkResponse(res, payload);
+        }
     },
 
     async create(req, res) {
         try {
+            console.log('create req body is', req.body);
             req.body.password =  bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
             const newUser = await usersRepository.create(req.body);
             httpResponseFormatter.formatOkResponse(res, newUser);

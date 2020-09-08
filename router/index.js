@@ -48,7 +48,7 @@ module.exports = app => {
     app.get('/user', usersController.getDetails);
 
     // app.get('/', usersController.getAll);
-    // app.get('/logout', sessionController.logOut);
+    app.get('/logout', sessionController.logOut);
 
     // ----------------- FOR TEST ONLY ----------------
     // Find a user

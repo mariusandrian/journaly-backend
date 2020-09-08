@@ -2,6 +2,7 @@ const HTTP_STATUS_CODES = {
     OK: 200,
     CREATED: 201,
     NOTFOUND: 404,
+    WRONGAUTH: 401,
     SERVERERR: 500,
     BADGATEWAY: 502,
     GATEWAYTIMEOUT: 504,
@@ -17,7 +18,7 @@ module.exports = {
             });
     },
     formatUserErrResponse (res, payload, errorMessage) {
-        res.status(HTTP_STATUS_CODES.NOTFOUND)
+        res.status(HTTP_STATUS_CODES.WRONGAUTH)
             .json({
                 status: 'not found',
                 error: errorMessage
