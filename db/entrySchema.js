@@ -18,7 +18,7 @@ const schema = {
                     type: "string"
                 },
                 moodIndicator: {
-                    type: "int"
+                    type: "number"
                 },
                 replies: {
                     type: "array"
