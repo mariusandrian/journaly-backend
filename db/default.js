@@ -7,7 +7,7 @@ const COLLECTIONS = {
     COMMUNITYPOST: 'communitypost',
     QUESTIONS: 'questions'
 };
-const MONGO_URL = process.env.MONGO_URI || 'mongodb+srv://admin:qAxfYfp8HHhEnCvL@cluster0-ijy0t.mongodb.net/journaly?retryWrites=true&w=majority';
+const MONGO_URL = process.env.MONGO_URI || 'mongodb://localhost:27017';
 
 const client = new MongoClient(MONGO_URL, { useUnifiedTopology: true });
 
