@@ -1,0 +1,16 @@
+version: "3"
+services:
+  journaly-services:
+    container_name: journaly-services
+    image: journaly-services:latest
+    restart: always
+    build: .
+    ports:
+      - "4000:4000"
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      DB_NAME: journaly
+      PORT: 4000
+      FRONT_END_URL: http://localhost:3000
